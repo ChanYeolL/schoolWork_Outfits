@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:split="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>ChanYeol后台管理页设计与开发</title>
+    <link rel="shortcut icon" href="img/logo.ico"/>
+
+    <link rel="stylesheet" href="css/ace.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/jquery-easyui/css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="vendor/jquery-easyui/css/icon.css">
+    <link rel="stylesheet" href="vendor/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="vendor/linearicons/style.css">
+    <!--<link rel="stylesheet" href="vendor/chartist/css/chartist-custom.css">-->
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="css/back.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+</head>
+<body class="easyui-layout" id="divLayout">
+    <div data-options="region:'north'" id="divTop">
+        <nav class="nav navbar navbar-default navbar-fixed-top">
+                <div class="brand">
+                <a href="index.html"><img src="img/ChanYeol-logo.png" alt="ChanYeol Logo" class="img-responsive logo"></a>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-btn">
+                    <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+                </div>
+                <form class="navbar-form navbar-left">
+                    <div class="input-group">
+                        <input type="text" value="" class="form-control" placeholder="请输入关键字进行搜索..." style="width: 550px">
+                        <span class="input-group-btn"><button type="button" class="btn btn-primary">搜索</button></span>
+                    </div>
+                </form>
+                <div id="navbar-menu">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                                <i class="lnr lnr-alarm"></i>
+                                <span class="badge bg-danger">1</span>
+                            </a>
+                            <ul class="dropdown-menu notifications">
+                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>你同意了我爱学习的申请</a></li>
+                                <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>系统空间已经满了</a></li>
+                                <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>你有9个未完成的任务</a></li>
+                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>每月的报告是可用的</a></li>
+                                <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>每周有一个一小时的会议</a></li>
+                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>你的请求已经得到批准</a></li>
+                                <li><a href="#" class="more">查看所有通知</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>帮助</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">基本使用</a></li>
+                                <li><a href="#">使用数据</a></li>
+                                <li><a href="#">安全</a></li>
+                                <li><a href="#">排除故障</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="img/c13.jpg" class="img-circle" alt="Avatar"> <span>ChanYeol</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="lnr lnr-user"></i> <span>个人信息</span></a></li>
+                                <li><a href="#"><i class="lnr lnr-envelope"></i> <span>信息</span></a></li>
+                                <li><a href="#"><i class="lnr lnr-cog"></i> <span>设置</span></a></li>
+                                <li><a href="#"><i class="lnr lnr-exit"></i> <span>退出登录</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div data-options="region:'west', split:true" title="导航菜单" style="width:270px ; ">
+        <div class="panel panel-primary">
+            <div class="panel-group" id="accordion">
+                <div class="panel">
+                    <a data-toggle="collapse"data-parent="#accordion" href="#collapseOne" class="list-group-item">
+                        <span class="fa fa-star"></span> &nbsp;常用功能
+                    </a>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul style="list-style: none">
+                            <li class="active">
+                                <a class="list-group-item" data-toggle="tab" href="#task-tab"><span class="fa fa-cog"></span> &nbsp;栏目管理 </a>
+                            </li>
+                            <li>
+                                <a class="list-group-item" data-toggle="tab" href="#member-tab"><span class="fa fa-cog"></span> &nbsp;用户管理 </a>
+                            </li>
+                            <li>
+                                <a class="list-group-item" data-toggle="tab" href="#comment-tab"><span class="fa fa-cog"></span> &nbsp;文章管理 </a>
+                            </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <a data-toggle="collapse"data-parent="#accordion" href="#collapseTwo" class="list-group-item">
+                        <span class="fa fa-cogs"></span> &nbsp;系统工具
+                    </a>
+                    <div id="collapseTwo" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <a class="list-group-item" onclick="addTab('网站设置','login.html')"><span class="fa fa-cog" ></span> &nbsp;网站设置 </a>
+                            <a class="list-group-item" onclick="addTab('查看日志','register.html')"><span class="fa fa-cog"></span> &nbsp;查看日志 </a>
+                            <a class="list-group-item" onclick="addTab('数据备份','findpassword.html')"><span class="fa fa-cog"></span> &nbsp;数据备份 </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center' , border:false" >
+       <div id="main" class="easyui-tabs" style="width: 100%; height: 30px;" data-options="fit : true">
+           <div title="管理" iconCls="icon-page_white_text">
+               <div class="widget-body">
+                   <div class="widget-main padding-4">
+                       <div class="tab-content padding-8 overflow-visible">
+                           <div id="task-tab" class="tab-pane active">
+                               <ul id="tasks" class="item-list">
+                                   <li class="item-orange clearfix">
+                                       <label class="inline">
+                                           <input type="checkbox" class="ace" />
+                                           <span class="lbl"> 问答</span>
+                                       </label>
+
+                                       <div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
+                                           <span >42</span>%
+                                       </div>
+                                   </li>
+
+                                   <li class="item-red clearfix">
+                                       <label class="inline">
+                                           <input type="checkbox" class="ace" />
+                                           <span class="lbl"> BUG修复</span>
+                                       </label>
+
+                                       <div class="pull-right action-buttons">
+                                           <a href="#" class="blue">
+                                               <i class="fa fa-check" aria-hidden="true"></i>
+                                           </a>
+                                       </div>
+                                   </li>
+
+                                   <li class="item-default clearfix">
+                                       <label class="inline">
+                                           <input type="checkbox" class="ace" />
+                                           <span class="lbl">添加新的特征</span>
+                                       </label>
+
+                                       <div class="inline pull-right position-relative dropdown-hover">
+                                           <button class="btn btn-minier bigger btn-primary">
+                                               <i class="fa fa-cog"></i>
+                                           </button>
+
+                                           <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
+                                               <li>
+                                                   <a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="green">
+																					 <i class="fa fa-check" aria-hidden="true"></i>
+																					</span>
+                                                   </a>
+                                               </li>
+
+                                               <li>
+                                                   <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+																					<span class="red">
+																						<i class="fa fa-times" aria-hidden="true"></i>
+																					</span>
+                                                   </a>
+                                               </li>
+                                           </ul>
+                                       </div>
+                                   </li>
+
+                                   <li class="item-blue clearfix">
+                                       <label class="inline">
+                                           <input type="checkbox" class="ace" />
+                                           <span class="lbl"> 更新模版脚本</span>
+                                       </label>
+                                   </li>
+
+                                   <li class="item-grey clearfix">
+                                       <label class="inline">
+                                           <input type="checkbox" class="ace" />
+                                           <span class="lbl"> 添加新皮肤</span>
+                                       </label>
+                                   </li>
+
+                                   <li class="item-green clearfix">
+                                       <label class="inline">
+                                           <input type="checkbox" class="ace" />
+                                           <span class="lbl"> 升级服务端</span>
+                                       </label>
+                                   </li>
+
+                                   <li class="item-pink clearfix">
+                                       <label class="inline">
+                                           <input type="checkbox" class="ace" />
+                                           <span class="lbl"> 清理垃圾</span>
+                                       </label>
+                                   </li>
+                               </ul>
+                           </div>
+
+                           <div id="member-tab" class="tab-pane">
+                               <div class="clearfix">
+                                   <div class="itemdiv memberdiv">
+                                       <div class="user">
+                                           <img alt="Bob Doe's avatar" src="img/c13.jpg" />
+                                       </div>
+
+                                       <div class="body">
+                                           <div class="name">
+                                               <a href="#">Bob Doe</a>
+                                           </div>
+
+                                           <div class="time">
+                                               <i class="icon-time"></i>
+                                               <span class="green">20 min</span>
+                                           </div>
+
+                                           <div>
+                                               <span class="label label-warning label-sm">判断中</span>
+
+                                               <div class="inline position-relative">
+                                                   <button class="btn btn-minier bigger btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown">
+                                                       <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                                   </button>
+
+                                                   <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                                       <li>
+                                                           <a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="green">
+																					 <i class="fa fa-check" aria-hidden="true"></i>
+																					</span>
+                                                           </a>
+                                                       </li>
+
+                                                       <li>
+                                                           <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+																					<span class="red">
+																						<i class="fa fa-times" aria-hidden="true"></i>
+																					</span>
+                                                           </a>
+                                                       </li>
+                                                   </ul>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="itemdiv memberdiv">
+                                       <div class="user">
+                                           <img alt="Alex Doe's avatar" src="img/c13.jpg" />
+                                       </div>
+
+                                       <div class="body">
+                                           <div class="name">
+                                               <a href="#">Alex Doe</a>
+                                           </div>
+
+                                           <div class="time">
+                                               <i class="icon-time"></i>
+                                               <span class="green">3 hour</span>
+                                           </div>
+
+                                           <div>
+                                               <span class="label label-danger label-sm">拒绝</span>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="itemdiv memberdiv">
+                                       <div class="user">
+                                           <img alt="Susan's avatar" src="img/c13.jpg" />
+                                       </div>
+
+                                       <div class="body">
+                                           <div class="name">
+                                               <a href="#">Susan</a>
+                                           </div>
+
+                                           <div class="time">
+                                               <i class="icon-time"></i>
+                                               <span class="green">昨天</span>
+                                           </div>
+
+                                           <div>
+                                               <span class="label label-success label-sm arrowed-in">同意</span>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="itemdiv memberdiv">
+                                       <div class="user">
+                                           <img alt="Phil Doe's avatar" src="img/c13.jpg" />
+                                       </div>
+
+                                       <div class="body">
+                                           <div class="name">
+                                               <a href="#">Phil Doe</a>
+                                           </div>
+
+                                           <div class="time">
+                                               <i class="icon-time"></i>
+                                               <span class="green">2天前</span>
+                                           </div>
+
+                                           <div>
+                                               <span class="label label-info label-sm arrowed-in arrowed-in-right">在线</span>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="itemdiv memberdiv">
+                                       <div class="user">
+                                           <img alt="Alexa Doe's avatar" src="img/c13.jpg" />
+                                       </div>
+
+                                       <div class="body">
+                                           <div class="name">
+                                               <a href="#">Alexa Doe</a>
+                                           </div>
+
+                                           <div class="time">
+                                               <i class="icon-time"></i>
+                                               <span class="green">3天以前</span>
+                                           </div>
+
+                                           <div>
+                                               <span class="label label-success label-sm arrowed-in">同意</span>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+
+                               <div class="center">
+                                   <i class="icon-group icon-2x green"></i>
+
+                                   &nbsp;
+                                   <a href="#">
+                                       查看所有会员 &nbsp;
+                                       <i class="icon-arrow-right"></i>
+                                   </a>
+                               </div>
+
+                               <div class="hr hr-double hr8"></div>
+                           </div><!-- member-tab -->
+
+                           <div id="comment-tab" class="tab-pane">
+                               <div class="comments">
+                                   <div class="itemdiv commentdiv">
+                                       <div class="user">
+                                           <img alt="Bob Doe's Avatar" src="img/c13.jpg" />
+                                       </div>
+
+                                       <div class="body">
+                                           <div class="name">
+                                               <a href="#">Bob Doe</a>
+                                           </div>
+
+                                           <div class="time">
+                                               <i class="icon-time"></i>
+                                               <span class="green">6 min</span>
+                                           </div>
+
+                                           <div class="text">
+                                               <i class="icon-quote-left"></i>
+                                               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                                           </div>
+                                       </div>
+
+                                       <div class="tools" style="display: block">
+                                           <div class="inline position-relative">
+                                               <button class="btn btn-minier bigger btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown">
+                                                   <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                               </button>
+
+                                               <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                                   <li>
+                                                       <a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="green">
+																					 <i class="fa fa-check" aria-hidden="true"></i>
+																					</span>
+                                                       </a>
+                                                   </li>
+
+                                                   <li>
+                                                       <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+																					<span class="red">
+																						<i class="fa fa-times" aria-hidden="true"></i>
+																					</span>
+                                                       </a>
+                                                   </li>
+                                               </ul>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="itemdiv commentdiv">
+                                       <div class="user">
+                                           <img alt="Jennifer's Avatar" src="img/c13.jpg" />
+                                       </div>
+
+                                       <div class="body">
+                                           <div class="name">
+                                               <a href="#">Jennifer</a>
+                                           </div>
+
+                                           <div class="time">
+                                               <i class="icon-time"></i>
+                                               <span class="blue">15 min</span>
+                                           </div>
+
+                                           <div class="text">
+                                               <i class="icon-quote-left"></i>
+                                               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                                           </div>
+                                       </div>
+
+                                       <div class="tools" style="display: block">
+                                           <div class="inline position-relative">
+                                               <button class="btn btn-minier bigger btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown">
+                                                   <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                               </button>
+
+                                               <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                                   <li>
+                                                       <a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="green">
+																					 <i class="fa fa-check" aria-hidden="true"></i>
+																					</span>
+                                                       </a>
+                                                   </li>
+
+                                                   <li>
+                                                       <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+																					<span class="red">
+																						<i class="fa fa-times" aria-hidden="true"></i>
+																					</span>
+                                                       </a>
+                                                   </li>
+                                               </ul>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="itemdiv commentdiv">
+                                       <div class="user">
+                                           <img alt="Joe's Avatar" src="img/c13.jpg" />
+                                       </div>
+
+                                       <div class="body">
+                                           <div class="name">
+                                               <a href="#">Joe</a>
+                                           </div>
+
+                                           <div class="time">
+                                               <i class="icon-time"></i>
+                                               <span class="orange">22 min</span>
+                                           </div>
+
+                                           <div class="text">
+                                               <i class="icon-quote-left"></i>
+                                               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                                           </div>
+                                       </div>
+
+                                       <div class="tools" style="display: block">
+                                           <div class="inline position-relative">
+                                               <button class="btn btn-minier bigger btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown">
+                                                   <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                               </button>
+
+                                               <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                                   <li>
+                                                       <a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="green">
+																					 <i class="fa fa-check" aria-hidden="true"></i>
+																					</span>
+                                                       </a>
+                                                   </li>
+
+                                                   <li>
+                                                       <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+																					<span class="red">
+																						<i class="fa fa-times" aria-hidden="true"></i>
+																					</span>
+                                                       </a>
+                                                   </li>
+                                               </ul>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="itemdiv commentdiv">
+                                       <div class="user">
+                                           <img alt="Rita's Avatar" src="img/c13.jpg" />
+                                       </div>
+
+                                       <div class="body">
+                                           <div class="name">
+                                               <a href="#">Rita</a>
+                                           </div>
+
+                                           <div class="time">
+                                               <i class="icon-time"></i>
+                                               <span class="red">50 min</span>
+                                           </div>
+
+                                           <div class="text">
+                                               <i class="icon-quote-left"></i>
+                                               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                                           </div>
+                                       </div>
+
+                                       <div class="tools" style="display: block">
+                                           <div class="inline position-relative">
+                                               <button class="btn btn-minier bigger btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown">
+                                                   <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                               </button>
+
+                                               <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                                   <li>
+                                                       <a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="green">
+																					 <i class="fa fa-check" aria-hidden="true"></i>
+																					</span>
+                                                       </a>
+                                                   </li>
+
+                                                   <li>
+                                                       <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+																					<span class="red">
+																						<i class="fa fa-times" aria-hidden="true"></i>
+																					</span>
+                                                       </a>
+                                                   </li>
+                                               </ul>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+
+                               <div class="hr hr8"></div>
+
+                               <div class="center">
+                                   <i class="icon-comments-alt icon-2x green"></i>
+                                   &nbsp;
+                                   <a href="#">
+                                      查看全部 &nbsp;
+                                       <i class="icon-arrow-right"></i>
+                                   </a>
+                               </div>
+
+                               <div class="hr hr-double hr8"></div>
+                           </div>
+                       </div>
+                   </div><!-- /widget-main -->
+               </div><!-- /widget-body -->
+           </div>
+       </div>
+    </div>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery-easyui/js/jquery.easyui.min.js"></script>
+    <script src="vendor/jquery-easyui/js/easyui-lang-zh_CN.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/back.js"></script>
+<script>
+     function addTab(title, url) {
+         if($('#main').tabs('exists',title)){
+             $('#main').tabs('select' ,title) ;
+         }else{
+             var content = '<iframe scrolling = "auto" frameborder = "0" src="'+ url +'" style="width:100%;" onload="adaptiveHeight(this)"></iframe> ' ;
+             $('#main').tabs('add' ,{
+                 title : title ,
+                 content: content ,
+                 closable: true,
+                 iconCls:"icon-page_white_text"
+             });
+         }
+     }
+</script>
+</body>
+</html>
