@@ -23,22 +23,25 @@ jQuery(document).ready(function ($) {
         pxImgCaption = pxContainer.find('.caption'),
         testimonial = $('.testimonial-slider'),
         cCarousel = $('.custom-carousel'),
-        loaderIntro = '<div class="landing landing-slider"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div>',
-        loader = '<div class="landing landing-els"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div>',
-        loaderLightbox = '<div class="landing landing-els lightbox"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div>',
-        darkover = '<div class="darkover"></div>',
-        moreBtnIcon = '<div class="more"><a href="#main"><i class="icon icon-arrow-down"></i></a></div>';
+        loaderIntro = '<div class="landing landing-slider"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div></div></div>',
+        loader = '<div class="landing landing-els"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div></div></div>',
+        loaderLightbox = '<div class="landing landing-els lightbox"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div></div></div>',
+        darkover = '<div class="darkover"></div>'
+        ;
 
-
-    /* Determine viewport width matching with media queries */
+    /*
+     *确定媒体查询的视口宽度匹配
+      */
 
     function viewport() {
 
         var e = window,
+            //内部的
             a = 'inner';
 
+        //内宽
         if (!('innerWidth' in window)) {
-
+            //客户端
             a = 'client';
             e = document.documentElement || document.body;
 
@@ -52,7 +55,11 @@ jQuery(document).ready(function ($) {
     }
 
 
-    /* Toggle "mobile" class */
+    /* Toggle "mobile" class
+     * 首页女神搭配框高
+     * 首页男神搭配框高
+     * 缩小时
+      * */
 
     function mobileClass() {
 
@@ -74,7 +81,9 @@ jQuery(document).ready(function ($) {
     $(window).resize(mobileClass);
 
 
-    /* Intro Height */
+    /* 介绍高
+    * 轮播图片上的文字位置
+    * */
 
     function introHeight() {
 
@@ -110,7 +119,9 @@ jQuery(document).ready(function ($) {
     }
 
 
-    /* Initialize Intro */
+    /*
+     * 初始化的介绍
+      * */
 
     function initIntro() {
 
@@ -160,12 +171,6 @@ jQuery(document).ready(function ($) {
                 if ($this.hasClass('darken')) {
                     pxImg.append(darkover);
                 }
-
-                if (pxWrapper.length && $this.hasClass('more-button') && $this.attr('data-pagination') !== 'true') {
-                    $this.append(moreBtnIcon);
-                    smoothScroll();
-                }
-
             },
             waitForAll: true
         });
@@ -180,39 +185,9 @@ jQuery(document).ready(function ($) {
 
     }
 
-
-    /* Smooth scroll */
-
-    function smoothScroll() {
-
-        $('a[href*=#]:not([href=#])').click(function () {
-
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-
-                var target = $(this.hash);
-
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-
-                if (target.length) {
-
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 500);
-
-                    return false;
-
-                }
-
-            }
-
-        });
-
-    }
-
-    smoothScroll();
-
-
-    /* Fixed header if there's no Big slider */
+    /* Fixed header if there's no Big slider
+     * 固定导航栏
+      * */
 
     if (!pxWrapper.length) {
 
@@ -221,13 +196,16 @@ jQuery(document).ready(function ($) {
     }
 
 
-    /* Parallax data attributes according to #intro's height */
+    /* Parallax data attributes according to #intro's height
+     * 轮播字体的位置
+      *
+      * */
 
     function parallax() {
 
         if (pxWrapper.length) {
 
-            var touchDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            var touchDevice ;
 
             if (touchDevice) {
 
@@ -280,12 +258,6 @@ jQuery(document).ready(function ($) {
                         }
 
                     }
-                    /*
-                    render: function(data) {
-                        //Log the current scroll position.
-                        console.log(data.curTop);
-                    }
-                    */
                 }).refresh();
 
                 pxImgCaption.each(function () {
@@ -372,7 +344,9 @@ jQuery(document).ready(function ($) {
     $(window).resize(parallax);
 
 
-    /* Submenus */
+    /* Submenus
+    * 导航栏下拉
+    * */
 
     var menuToggle = $('#menu-toggle'),
         headerNavUl = headerNav.children('ul'),
@@ -418,7 +392,10 @@ jQuery(document).ready(function ($) {
     }
 
 
-    /* Overlay content absolute centering */
+    /* Overlay content absolute centering
+
+    男神搭配
+     */
 
     function centerOverlay() {
 
@@ -490,7 +467,9 @@ jQuery(document).ready(function ($) {
     $(window).on('resize', centerOverlay);
 
 
-    /* fix Blog Excerpt Heights */
+    /* fix Blog Excerpt Heights
+     * 女神搭配，男神搭配板块位置
+      * */
 
     var blogExcerpt = $('.item.column.three .blog-excerpt');
 
@@ -529,7 +508,9 @@ jQuery(document).ready(function ($) {
     }
 
 
-    /* Masonry */
+    /* Masonry
+     * 首页男神搭配，女神搭配
+      * */
 
     var grid = $('.grid-items');
 
@@ -596,367 +577,6 @@ jQuery(document).ready(function ($) {
         masonry();
 
     }
-
-
-    /* Dribbble API */
-
-    var dribbbleItems = $('.dribbble-items');
-
-    var callback = function (playerShots) {
-
-        var html = '';
-
-        $.each(playerShots.shots, function (i, shot) {
-            html += '<div class="item column three"><figure>';
-            html += '<img src="' + shot.image_url + '" ';
-            html += 'alt="' + shot.title + '"></figure>';
-            html += '<a class="overlay" href="' + shot.url + '">';
-            html += '<div class="overlay-content">';
-            html += '<div class="post-type"><i class="fa fa-dribbble"></i></div>';
-            // html += '<h2>' + shot.title + '</h2>';
-            html += '<p class="reset">' + shot.views_count + ' views</p>';
-            html += '<p class="reset">' + shot.likes_count + ' likes</p>';
-            html += '</div></a></div>';
-        });
-
-        dribbbleItems.html(html).append(loader);
-        var $this = $('.dribbble-items');
-        $this.find('.item:nth-of-type(4n)').addClass('last');
-        $this.removeClass('preload');
-        $this.children('.landing-els').remove(); 
-        centerOverlay();           
-
-    };
-
-    if (dribbbleItems.length) {
-
-        var username = dribbbleItems.data('username'),
-            elemNr = dribbbleItems.data('elements');
-
-        $.jribbble.getShotsByPlayerId(username, callback, {
-            page: 1,
-            per_page: elemNr
-        });
-
-        $(window).load(function() {
-
-            centerOverlay(); 
-
-        });        
-
-    }
-    
-    /* Milestone */
-
-    var countItem = $('.count-item');
-
-    function milestone() {
-
-        countItem.each(function () {
-
-            var $this = $(this);
-
-            $this.onScreen({
-                doIn: function () {
-                    var countNumber = $this.find('.count-number'),
-                        countTitle = $this.find('.count-subject');
-                    countNumber.countTo({
-                        onComplete: function () {
-                            countTitle.delay(100).addClass('subject-on');
-                            countNumber.removeClass('count-number').addClass('count-number-done');
-                        }
-                    });
-                },
-            });
-
-        });
-    }
-
-    if (countItem.length) {
-
-        milestone();
-
-    }
-
-
-    /* Timeline's circle color */
-
-    var timeline = $('.timeline'),
-        circle = timeline.find('.circle');
-
-    if (timeline.length) {
-
-        circle.each(function () {
-
-            var circleColor = $(this).parents('section').css('background-color');
-            $(this).css({
-                backgroundColor: circleColor
-            });
-
-        });
-
-    }
-
-
-    /* Testimonial Carousel */
-
-    function initTestimonial() {
-
-        testimonial.each(function () {
-
-            var $this = $(this),
-                autoplay = $this.data('autoplay'),
-                pagination = $this.data('pagination'),
-                transition = $this.data('transition'),
-                autoheight = $this.data('autoheight');
-
-            $this.owlCarousel({
-                singleItem: true,
-                autoPlay: autoplay || false,
-                transitionStyle: transition || false,
-                autoHeight: autoheight || false,
-                stopOnHover: true,
-                responsiveBaseWidth: ".slider",
-                responsiveRefreshRate: 0,
-                addClassActive: true,
-                pagination: pagination || false,
-                rewindSpeed: 2000,
-            });
-
-        });
-
-    }
-
-    if (testimonial.length) {
-
-        initTestimonial();
-
-    }
-
-
-    /* Custom Carousel */
-
-    function initCCarousel() {
-
-        cCarousel.each(function () {
-
-            var $this = $(this),
-                autoplay = $this.data('autoplay'),
-                pagination = $this.data('pagination'),
-                transition = $this.data('transition'),
-                autoheight = $this.data('autoheight');
-
-            $this.owlCarousel({
-                singleItem: true,
-                autoPlay: autoplay || false,
-                transitionStyle: transition || false,
-                autoHeight: autoheight || false,
-                stopOnHover: true,
-                responsiveBaseWidth: ".slider",
-                responsiveRefreshRate: 0,
-                addClassActive: true,
-                pagination: pagination || false,
-                rewindSpeed: 2000,
-            });
-
-        });
-
-    }
-
-    if (cCarousel.length) {
-
-        initCCarousel();
-
-    }
-
-
-    /* onScreen Animations */
-
-    var onScreenAnims = $('.animation');
-
-    if (onScreenAnims.length) {
-
-        onScreenAnims.onScreen({
-            toggleClass: false,
-            doIn: function () {
-                $(this).addClass('onscreen')
-            }
-        });
-
-    }
-
-
-    /* Return the right mockup according to the class & initialize sliders */
-
-    var findDevice = $('.slider');
-
-    if ((findDevice.length) && (!findDevice.hasClass('gallery'))) {
-
-        useMockup();
-
-        function fixArrowPos() {
-
-            findDevice.each(function () {
-
-                var slideHeight = $(this).find('.owl-item').outerHeight(true);
-
-                $(this).find('.owl-prev, .owl-next').css('top', slideHeight / 2);
-
-            });
-
-        }
-
-        fixArrowPos();
-        $(window).resize(fixArrowPos);
-
-    }
-
-
-    /* Initialize Gallery Sliders */
-
-    var galleryslidercontainer = $('.gallery.slider');
-
-    function gallerySlider() {
-
-        galleryslidercontainer.each(function () {
-
-            var $this = $(this),
-                galleryslider = $this.children('figure'),
-                autoplay = $this.data('autoplay'),
-                autoheight = $this.data('autoheight');
-
-            galleryslider.owlCarousel({
-                singleItem: true,
-                autoHeight: autoheight || false,
-                autoPlay: autoplay || false,
-                transitionStyle: "fade",
-                stopOnHover: true,
-                responsiveBaseWidth: ".slider",
-                responsiveRefreshRate: 0,
-                addClassActive: true,
-                navigation: true,
-                navigationText: [
-                    "<i class='icon  icon-arrow-up'></i>",
-                    "<i class='icon icon-arrow-down'></i>"
-                ],
-                pagination: false,
-                rewindSpeed: 2000,
-            });
-
-            $this.fadeIn('slow');
-
-        });
-
-    }
-
-    if (galleryslidercontainer.length) {
-
-        gallerySlider();
-
-    }
-
-
-    /* Create unique data-lightbox attributes http://stackoverflow.com/questions/11044876/how-to-auto-generate-id-for-child-div-in-jquery */
-
-    var lightboxContainer = $('.lightbox');
-
-    if (lightboxContainer.length) {
-
-        var $this = lightboxContainer;
-
-        for (var i = 0; i < $this.length; i++) {
-
-            $($this[i]).find('.item a').attr("data-lightbox", "gallery-" + i);
-
-        }
-
-        lightboxContainer.each(function () {
-
-            var $this = $(this);
-
-            var activityIndicatorOn = function () {
-                $(loaderLightbox).appendTo('body');
-            },
-                activityIndicatorOff = function () {
-                    $('.landing-els').remove();
-                },
-                overlayOn = function () {
-                    $('<div id="imagelightbox-overlay"></div>').appendTo('body');
-                },
-                overlayOff = function () {
-                    $('#imagelightbox-overlay').remove();
-                },
-                closeButtonOn = function (instance) {
-                    $('<a href="#" id="imagelightbox-close"><i class="icon icon-close"></i></a>').appendTo('body').on('click', function () {
-                        $(this).remove();
-                        instance.quitImageLightbox();
-                        return false;
-                    });
-                },
-                closeButtonOff = function () {
-                    $('#imagelightbox-close').remove();
-                },
-                captionOn = function () {
-                    var description = $('a[href="' + $('#imagelightbox').attr('src') + '"]').find('h2').html();
-                    if (description.length > 0)
-                        $('<div id="imagelightbox-caption"><h3>' + description + '</h3></div>').appendTo('body');
-                },
-                captionOff = function () {
-                    $('#imagelightbox-caption').remove();
-                };
-
-
-            var instance = $this.find('.item a[data-lightbox^="gallery-"]').imageLightbox({
-                onStart: function () {
-                    overlayOn();
-                    closeButtonOn(instance);
-                },
-                onEnd: function () {
-                    overlayOff();
-                    captionOff();
-                    closeButtonOff();
-                    activityIndicatorOff();
-                },
-                onLoadStart: function () {
-                    captionOff();
-                    activityIndicatorOn();
-                },
-                onLoadEnd: function () {
-                    captionOn();
-                    activityIndicatorOff();
-                }
-            });
-
-        });
-
-    }
-
-    /* Add some "last" classes */
-
-    headerNav.find('.menu-item').last('li').addClass('last');
-    $('#top-footer').find('.column').last('.column').addClass('last');
-    $('.blog.list-style').find('article').last('article').addClass('last');
-    $('.search.list-style').find('article').last('article').addClass('last');
-
-
-    /* Clear columns */
-
-    var lastColumn = $('.column.last');
-
-    if (lastColumn.length) {
-
-        lastColumn.after('<div class="clear"></div>');
-
-    }
-
-
-    /* Initialize FluidVids.js */
-
-    Fluidvids.init({
-        selector: 'iframe',
-        players: ['www.youtube.com', 'player.vimeo.com']
-    });
-
 
 
 });
